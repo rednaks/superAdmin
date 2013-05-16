@@ -7,9 +7,16 @@ createUser(){
   do
     echo "Entrez le nom d'utilisateur :";
     read uname;
-    test -n "$uname" && break
+    if [ -z "$uname" ]
+    then
+      echo "Vous devez entez un nom d'utilisateur"
+    elif [ -n "$(grep $uname /etc/passwd)" ]
+    then
+      echo "Cet utilisateur existe déjà"
+    else
+      break
+    fi
   done
-  echo "The user name is : $uname";
   echo "Entrez le mot de passe associé :";
   read -s password;
   echo "Voulez vous préciser les groupes ? [O/N]";
