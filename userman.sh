@@ -3,6 +3,8 @@
 createUser(){
   clear;
   echo "** Création d'utilisateur";
+
+  #saisie du nom d'utilisateur
   while true
   do
     echo "Entrez le nom d'utilisateur :";
@@ -17,8 +19,19 @@ createUser(){
       break
     fi
   done
-  echo "Entrez le mot de passe associé :";
-  read -s password;
+
+  #saisie du mot de passe
+  while true
+  do
+    echo "Entrez le mot de passe associé :";
+    read -s password;
+    if [ -z "$password" ]
+    then
+      echo "Vous devez enter un mot de passe"
+    else
+      break
+    fi
+  done
   echo "Voulez vous préciser les groupes ? [O/N]";
   read yn
   case $yn in
