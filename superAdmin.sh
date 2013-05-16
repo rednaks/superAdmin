@@ -13,7 +13,8 @@ echo "Faites votre choix : "
 read choix
 
 case $choix in
-  1) echo -e "Gestion d'utilisateurs...";;
+  1) echo -e "Gestion d'utilisateurs...";
+    ./userman.sh;;
   2) echo -e "Gestion des tâches ...";;
   3) echo -e "La journalisation ...";;
   4) echo -e "Gestion du réseaux ...";;
