@@ -20,6 +20,8 @@ do
     2) echo -e "Gestion des tâches ...";;
     3) echo -e "La journalisation ...";;
     4) echo -e "Gestion du réseaux ...";;
+    5) echo -e "Quitter ...";
+      exit 0;;
     *) echo -e "Ce choix n'existe pas !";;
   esac
 done
