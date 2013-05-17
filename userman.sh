@@ -112,7 +112,8 @@ case $choix in
   4) echo -e "Gestion des mots de passes...";;
   5) echo -e "Retour...";
     exit 0;;
-  6) echo -e "Quit";;
+  6) echo -e "Quit";
+    exit 0;;
   *) echo -e "Ce choix n'existe pas...";;
 esac
 
