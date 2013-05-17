@@ -85,8 +85,7 @@ createUser(){
           gname=${gp[$gchoix]}
         fi
         ;;
-    [Nn]) echo "Continuer";;
-       *) echo "Ce choix n'existe pas";;
+       *) echo "Groupe ne sera pas spécifié";;
   esac
   if [ -n "$gname" ]
   then
@@ -111,7 +110,8 @@ case $choix in
   2) echo -e "Supression des utilisateurs ...";;
   3) echo -e "List des utilisateurs ...";;
   4) echo -e "Gestion des mots de passes...";;
-  5) echo -e "Retour...";;
+  5) echo -e "Retour...";
+    exit 0;;
   6) echo -e "Quit";;
   *) echo -e "Ce choix n'existe pas...";;
 esac
