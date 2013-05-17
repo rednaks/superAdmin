@@ -32,10 +32,36 @@ createUser(){
       break
     fi
   done
+
+  #choix du groupe
   echo "Voulez vous préciser les groupes ? [O/N]";
   read yn
   case $yn in
-    [Oo]) echo "Lister les groupes";;
+    [Oo]) echo "Lister les groupes";
+        gp=(`groups`)
+        compt=0
+        for g in "${gp[@]}"
+        do
+          echo "[$compt] $g"""
+          let compt++
+        done
+        echo "[$compt] Créer un nouveau groupe"
+        while true
+        do
+          echo "Votre choix:"
+          read gchoix
+          if [ $gchoix -le $compt ]
+          then
+            break
+          fi
+        done
+        if [ $gchoix -eq $compt ]
+        then
+          echo "Action is : Creating a new group"
+        else
+          echo "Action is : using ${gp[$gchoix]}"
+        fi
+        ;;
     [Nn]) echo "Continuer";;
        *) echo "Ce choix n'existe pas";;
   esac
