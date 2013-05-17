@@ -15,6 +15,7 @@ createGroup(){
     then
       echo "Ce groupe existe déjà"
     else
+      echo "groupadd $gname"
       break
     fi
   done
