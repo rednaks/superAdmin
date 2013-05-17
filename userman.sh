@@ -1,5 +1,26 @@
 #!/bin/bash
 
+
+GlobalGName = ""
+createGroup(){
+  #saisie du nom du groupe 
+  while true
+  do
+    echo "Donner ne nom du groupe que vous voulez créer"
+    read gname
+    if [ -z "$gname" ]
+    then
+      echo "Vous devez spécifer le nom du groupe"
+    elif [ -n "$(grep $gname /etc/group)" ]
+    then
+      echo "Ce groupe existe déjà"
+    else
+      break
+    fi
+  done
+
+  GlobalGName=$gname
+}
 createUser(){
   clear;
   echo "** Création d'utilisateur";
@@ -24,7 +45,7 @@ createUser(){
   while true
   do
     echo "Entrez le mot de passe associé :";
-    read -s password;
+    read -s password
     if [ -z "$password" ]
     then
       echo "Vous devez enter un mot de passe"
@@ -57,14 +78,20 @@ createUser(){
         done
         if [ $gchoix -eq $compt ]
         then
-          echo "Action is : Creating a new group"
+          createGroup
+          gname=$GlobalGName
         else
-          echo "Action is : using ${gp[$gchoix]}"
+          gname=${gp[$gchoix]}
         fi
         ;;
     [Nn]) echo "Continuer";;
        *) echo "Ce choix n'existe pas";;
   esac
+  if [ -n "$gname" ]
+  then
+    gopt="-G $gname"
+  fi
+  echo "useradd $uname -p $password $gopt"
 }
 
 clear;
