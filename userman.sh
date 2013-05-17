@@ -94,6 +94,41 @@ createUser(){
   echo "useradd $uname -p $password $gopt"
 }
 
+deleteUsers() {
+  while true
+  do
+    while true
+    do
+      echo "Donner le nom d'utilisateur que vous voulez supprimer:"
+      read uname
+      if [ -z "$uname" ]
+      then 
+        echo "Veuillez entrez un nom d'utilisateur"
+      elif [ -z "$(grep $uname /etc/passwd)" ]
+      then
+        echo "Utilisateur n'exite pas"
+      else
+        break
+      fi
+    done
+    echo "Voulez vous vraiment supprimer l'utilisateur $uname ? [O/N]"
+    read choix
+    case $choix in
+      [Oo]) echo "Supression ...";
+            echo "userdel -r $uname";;
+         *) echo "Annulation ...";;
+    esac
+
+    echo "Voulez vous supprimer un autre utilisateur ? [O/N]"
+    read suppChoix
+    case $suppChoix in
+      [Oo]) echo "Suppression d'un autre utilisateur ...";;
+         *) echo "Fin.";
+          break;;
+    esac
+  done
+}
+
 clear;
 echo "[1] Créer un utilisateur"
 echo "[2] Supprimer des utilisateurs"
@@ -107,7 +142,8 @@ read choix
 case $choix in
   1) echo -e "Création d'un utilisateur ...";
     createUser;;
-  2) echo -e "Supression des utilisateurs ...";;
+  2) echo -e "Supression des utilisateurs ...";
+    deleteUsers;;
   3) echo -e "List des utilisateurs ...";;
   4) echo -e "Gestion des mots de passes...";;
   5) echo -e "Retour...";
