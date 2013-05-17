@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-GlobalGName = ""
+GlobalGName=""
 createGroup(){
   #saisie du nom du groupe 
   while true
@@ -129,6 +129,26 @@ deleteUsers() {
   done
 }
 
+listUsers(){
+  while true
+  do
+    echo "[1] Details sur un utilisateur"
+    echo "[2] Lister les sessions ouvertes"
+    echo "[3] Lister les utilisateurs (simple/système)"
+    echo "[4] Retour"
+    
+    echo "Votre choix"
+    read choix
+    case $choix in
+      1) echo "Details sur les utilisateurs";;
+      2) echo "Lister les sessions ouvertes";;
+      3) echo "Lister les utilisateurs simple ou sys";;
+      4) echo "Retour ...";
+        break;;
+      *) echo "Ce choix n'existe pas !";;
+    esac
+  done
+}
 clear;
 echo "[1] Créer un utilisateur"
 echo "[2] Supprimer des utilisateurs"
