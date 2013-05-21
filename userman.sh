@@ -129,8 +129,39 @@ deleteUsers() {
   done
 }
 
+
+listAll(){
+  users=(`cut -d: -f1 /etc/passwd`)
+  for u in "${users[@]}"
+  do
+    id=$(echo "$(id -u $u)")
+    if [ $id -gt 999 ]
+    then
+      echo "$u (simple)"
+    else
+      echo "$u (système)"
+    fi
+  done
+}
+
+listSimpleSys(){
+  echo "[1] Lister les utilisateurs simples"
+  echo "[2] Lister les utilisateurs système"
+  echo "[3] Lister tout les utilisateurs"
+  echo "[4] Retour"
+  read choix
+
+  case $choix in
+    1) echo "Liste des utilisateurs simple";;
+    2) echo "Liste des utilisateurs système";;
+    3) echo "Liste de tout les utilisateurs";
+       listAll;;
+    4) echo "Retour ...";;
+  esac
+}
+ 
 listUsers(){
-  while true
+ while true
   do
     echo "[1] Details sur un utilisateur"
     echo "[2] Lister les sessions ouvertes"
@@ -164,7 +195,8 @@ case $choix in
     createUser;;
   2) echo -e "Supression des utilisateurs ...";
     deleteUsers;;
-  3) echo -e "List des utilisateurs ...";;
+  3) echo -e "List des utilisateurs ...";
+    listSimpleSys;;
   4) echo -e "Gestion des mots de passes...";;
   5) echo -e "Retour...";
     exit 0;;
