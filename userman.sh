@@ -171,7 +171,8 @@ listSimpleSys(){
   read choix
 
   case $choix in
-    1) echo "Liste des utilisateurs simple";;
+    1) echo "Liste des utilisateurs simple";
+       listSimple;;
     2) echo "Liste des utilisateurs système";;
     3) echo "Liste de tout les utilisateurs";
        listAll;;
@@ -192,7 +193,8 @@ listUsers(){
     case $choix in
       1) echo "Details sur les utilisateurs";;
       2) echo "Lister les sessions ouvertes";;
-      3) echo "Lister les utilisateurs simple ou sys";;
+      3) echo "Lister les utilisateurs simple ou sys";
+        listSimpleSys;;
       4) echo "Retour ...";
         break;;
       *) echo "Ce choix n'existe pas !";;
@@ -220,7 +222,7 @@ case $choix in
   2) echo -e "Supression des utilisateurs ...";
     deleteUsers;;
   3) echo -e "List des utilisateurs ...";
-    listSimpleSys;;
+    listUsers;;
   4) echo -e "Gestion des mots de passes...";;
   5) echo -e "Retour...";
     exit 0;;
