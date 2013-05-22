@@ -173,13 +173,38 @@ listSimpleSys(){
   case $choix in
     1) echo "Liste des utilisateurs simple";
        listSimple;;
-    2) echo "Liste des utilisateurs système";;
+    2) echo "Liste des utilisateurs système";
+      listSys;;
     3) echo "Liste de tout les utilisateurs";
        listAll;;
     4) echo "Retour ...";;
   esac
 }
  
+listSimple(){
+  users=(`cut -d: -f1 /etc/passwd`)
+  for u in "${users[@]}"
+  do
+    id=$(echo "$(id -u $u)")
+    if [ $id -gt 999 -o $id -eq 0 ]
+    then
+      echo "$u (simple)"
+    fi
+  done
+}
+
+listSys(){
+  users=(`cut -d: -f1 /etc/passwd`)
+  for u in "${users[@]}"
+  do
+    id=$(echo "$(id -u $u)")
+    if [ $id -lt 1000 -a $id -ne 0 ]
+    then
+      echo "$u (système)"
+    fi
+  done
+}
+
 listUsers(){
  while true
   do
