@@ -217,7 +217,8 @@ listUsers(){
     read choix
     case $choix in
       1) echo "Details sur les utilisateurs";;
-      2) echo "Lister les sessions ouvertes";;
+      2) echo "Lister les sessions ouvertes";
+        who | awk '{print $1 " est connecte sur " $2 " depuis " $3};';;
       3) echo "Lister les utilisateurs simple ou sys";
         listSimpleSys;;
       4) echo "Retour ...";
