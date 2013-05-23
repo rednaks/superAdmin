@@ -205,6 +205,20 @@ listSys(){
   done
 }
 
+listInfos() {
+  echo "Donner le nom d'utilisateur :"
+  read uname
+  id $uname > /dev/null
+  if [ $? -eq 0 ]
+  then
+    id=$(id -u $uname)
+    home=$(grep ^$uname /etc/passwd | cut -d: -f6)
+    shell=$(grep ^$uname /etc/passwd | cut -d: -f7)
+    commentaire=$(grep ^$uname /etc/passwd | cut -d: -f5)
+    echo -e "Infos de l'utilisateur $uname :"
+    echo -e "login : $uname\nId : $id\nHome : $home\nShell : $shell\nCommentaire : $commentaire"
+  fi
+}
 listUsers(){
  while true
   do
@@ -216,7 +230,8 @@ listUsers(){
     echo "Votre choix"
     read choix
     case $choix in
-      1) echo "Details sur les utilisateurs";;
+      1) echo "Details sur les utilisateurs";
+        listInfos;;
       2) echo "Lister les sessions ouvertes";
         who | awk '{print $1 " est connecte sur " $2 " depuis " $3};';;
       3) echo "Lister les utilisateurs simple ou sys";
@@ -230,7 +245,79 @@ listUsers(){
 
 #############################################################################
 #############################################################################
-################### END Supression d'utilisateur ##########################
+################### END List d'utilisateur ##########################
+
+#############################################################################
+#############################################################################
+################### Begin Passwords  ##########################################
+
+protectUser() {
+  while true
+  do
+    echo "Donner le nom d'utilisteur que vous voulez sécuriser :"
+    read uname
+    id $uname > /dev/null
+    if [ $? -eq 0 ]
+      break;
+    else
+      echo "Utilisateur n'existe pas"
+    fi
+  done
+  passwd $uname
+
+}
+
+lockUnlockUser() {
+  while true
+  do
+    echo "Donner le nom d'utilisteur que vous voulez sécuriser :"
+    read uname
+    id $uname > /dev/null
+    if [ $? -eq 0 ]
+    then
+      break;
+    else
+      echo "Utilisateur n'existe pas"
+    fi
+  done
+  status=$(passwd -S $uname | awk '{print $2}')
+  if [ $status -eq "PS" ]
+  then
+    echo "Voulez vous Blocker l'utilisateur $uname ? [Y/N]"
+    read choix
+    case $choix in 
+    [Yy]) echo "Blockage de l'utilisateur $uname"
+          passwd -l $uname;;
+       *) echo "Annulation ..."
+    esac
+  else 
+    echo "Voulez vous déblocker l'utilisateur $uname ? [Y/N]"
+    read choix
+    case $choix in 
+    [Yy]) echo "déblockage de l'utilisateur $uname"
+          passwd -u $uname;;
+       *) echo "Annulation ..."
+    esac
+
+  fi
+
+}
+passman() {
+  echo "[1] Blocker/Déblocker un utilisateur"
+  echo "[2] Protéger un compte avec un mot de passe"
+  echo "[3] Retour"
+
+  read choix
+
+  case $choix in
+    1) echo "Blocker/Déblocker un utilisateur";
+      lockUnlockUser;;
+    2) echo "Protéger un compte avec un mot de passe ...";
+      protectUser;;
+    3) echo "Retour ...";;
+  esac
+}
+##################  END passwords ############################################
 
 clear;
 echo "[1] Créer un utilisateur"
@@ -249,7 +336,8 @@ case $choix in
     deleteUsers;;
   3) echo -e "List des utilisateurs ...";
     listUsers;;
-  4) echo -e "Gestion des mots de passes...";;
+  4) echo -e "Gestion des mots de passes...";
+    passman;;
   5) echo -e "Retour...";
     exit 0;;
   6) echo -e "Quit";
