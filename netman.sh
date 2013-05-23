@@ -11,13 +11,19 @@ echo "[6] Redémarrer le service réseau"
 echo "Tapez votre choix :"
 read choix
 
+changeHostname() {
+  echo "Donner un nom pour la machine : "
+  read name
+  hostname $name
+}
 case $choix in
   1) echo "Lister les cartes"
     ifconfig -a;;
   2) echo "Changer l'adress ip d'une carte";;
   3) echo "Activer/Désactiver une carte";;
   4) echo "Changer le serveur dns";;
-  5) echo "Changer le nom de la machine";;
+  5) echo "Changer le nom de la machine";
+    changeHostname;;
   6) echo "Redemarrage du service réseau ...";
     /etc/init.d/networkmanager restart;;
   *) echo "Retour ..."
