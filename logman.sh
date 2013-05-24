@@ -2,6 +2,13 @@
 
 
 rechercheLog() {
+  echo "Donner le service que vous voulez voir"
+  read service
+  echo "Donner le degré [info|alert|crit|err|warn|notice|info|debug]"
+  read deg
+  echo "Donner le mot clé"
+  read cle
+  
 }
 clear;
 
