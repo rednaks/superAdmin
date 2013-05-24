@@ -17,7 +17,8 @@ createGroup(){
     then
       echo "Ce groupe existe déjà"
     else
-      echo "groupadd $gname"
+      groupadd $gname
+      logger -p user.info "Création du group $gname"
       break
     fi
   done
@@ -93,7 +94,8 @@ createUser(){
   then
     gopt="-G $gname"
   fi
-  echo "useradd $uname -p $password $gopt"
+  useradd $uname -p $password $gopt
+  logger -p user.info "Création de l'utilisateur $uname"
 }
 
 #############################################################################
