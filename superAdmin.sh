@@ -18,8 +18,11 @@ do
     1) echo -e "Gestion d'utilisateurs...";
       ./userman.sh;;
     2) echo -e "Gestion des tâches ...";;
+      ./cronman.sh
     3) echo -e "La journalisation ...";;
+      ./logman.sh
     4) echo -e "Gestion du réseaux ...";;
+      ./netman.sh
     5) echo -e "Quitter ...";
       exit 0;;
     *) echo -e "Ce choix n'existe pas !";;
